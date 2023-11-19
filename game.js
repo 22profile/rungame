@@ -7,13 +7,12 @@ let gameStarted = false;
 let startTime = 0;
 let elapsedTime = 0;
 let recordTime = getRecordFromLocalStorage();
-let coinCount = 0;
-let coins = [];
+
 let zombies = [];
 const zombieSpeed = 2;
 const zombieSize = 50;
 let spawnInterval = 150; 
-let coinIndex = 0;
+
 
 function createZombie() {
   let side = Math.floor(random(4));
@@ -61,45 +60,12 @@ function createZombie() {
   return zombie;
 }
 
-function createCoin() {
-  let coin = {
-    x: random(width),
-    y: random(height),
-    size: 20,
-    collected: false,
-    display: function () {
-      if (!this.collected) {
-        fill(255, 255, 0);
-        ellipse(this.x, this.y, this.size, this.size);
-      }
-    },
-    checkCollision: function () {
-  if (!this.collected) {
-    if (
-      playerX < this.x + this.size &&
-      playerX + 50 > this.x &&
-      playerY < this.y + this.size &&
-      playerY + 50 > this.y
-    ) {
-      this.collected = true;
-      coinCount++;
-      coinIndex++; 
-      if (coinIndex < coins.length) {
-        coins[coinIndex] = createCoin(); 
-      }
-    }
-  }
-},
-  };
-  return coin;
-}
 
 function setup() {
   createCanvas(windowWidth * 0.99, windowHeight * 0.975);
   window.addEventListener("focus", windowFocus);
   window.addEventListener("blur", windowBlur);
   startTime = getCurrentTime() - elapsedTime;
-  spawnCoins();
 }
 
 function windowFocus() {
@@ -116,12 +82,6 @@ function windowBlur() {
   }
 }
 
-function spawnCoins() {
-  let coinCountLimit = floor(recordTime) - 1; 
-  for (let i = 0; i < coinCountLimit; i++) {
-    coins.push(createCoin());
-  }
-}
 
 function draw() {
   background(220);
@@ -173,17 +133,13 @@ function draw() {
           width / 2,
           height / 2 + 80
         );
-        text(`Подобрано монет: ${coinCount}`, width / 2, height / 2 + 110);
+ 
 		text("Для рестарта нажмите Enter", width / 2, height / 2 - 110);
 		elapsedTime = 0;
         noLoop();
       }
     }
 
-    for (let i = 0; i <= coinIndex; i++) {
-      coins[i].display();
-      coins[i].checkCollision();
-    }
 
     let prevPlayerX = playerX;
     let prevPlayerY = playerY;
@@ -216,7 +172,7 @@ function draw() {
       10
     );
     text(`Рекордное время: ${nf(recordTime / 1000, 0, 2)} секунд`, 10, 30);
-    text(`Подобрано монет: ${coinCount}`, 10, 50);
+   
   }
 }
 
@@ -246,9 +202,6 @@ function keyPressed() {
     startTime = getCurrentTime() - elapsedTime;
     saveStartTimeToLocalStorage(startTime);
     zombies = [];
-    coins = [];
-    coinCount = 0;
-    coinIndex = 0;
     spawnCoins();
     loop();
   }
