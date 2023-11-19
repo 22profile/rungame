@@ -202,7 +202,6 @@ function keyPressed() {
     startTime = getCurrentTime() - elapsedTime;
     saveStartTimeToLocalStorage(startTime);
     zombies = [];
-    spawnCoins();
     loop();
   }
 }
