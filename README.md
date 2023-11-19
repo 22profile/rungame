@@ -1,4 +1,4 @@
 # rungame
-Simple js web game
+Убегай от зеленых квадратиков ("зомби")
 
-Play: https://22profile.github.io/rungame/
+Играть: https://22profile.github.io/rungame/
