@@ -1,0 +1,38 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Убегай от зомби</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <script src="game.js"></script>
+  <style>
+    body, html {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    function getCurrentTime() {
+      return millis();
+    }
+
+    function saveRecordToLocalStorage() {
+      localStorage.setItem("record", recordTime);
+    }
+
+    function getRecordFromLocalStorage() {
+      return parseFloat(localStorage.getItem("record")) || 0;
+    }
+
+    function saveStartTimeToLocalStorage(time) {
+      localStorage.setItem("startTime", time);
+    }
+
+    function getElapsedTimeFromLocalStorage() {
+      return parseFloat(localStorage.getItem("elapsedTime")) || 0;
+    }
+  </script>
+</body>
+</html>
